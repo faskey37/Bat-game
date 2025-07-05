@@ -56,19 +56,64 @@ class Game {
     this.canvas.addEventListener("keyup", (e) => {
       this.player.wingsUp;
     });
-    //touch controls
-    this.canvas.addEventListener("touchstart", (e) => {
-      this.player.flap();
-      this.touchStartX = e.changedTouches[0].pageX;
+   // In your Game class constructor:
+constructor(canvas) {
+    // ... existing code ...
+    
+    // Touch control variables
+    this.touchStartX = 0;
+    this.touchStartY = 0;
+    this.swipeThreshold = 50; // Minimum swipe distance in pixels
+    this.tapThreshold = 10; // Max movement to consider as tap
+    this.lastTapTime = 0;
+    this.doubleTapDelay = 300; // ms
+    
+    // Touch event listeners
+    this.setupTouchControls();
+}
+
+setupTouchControls() {
+    // Prevent default touch behaviors
+    this.canvas.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+    }, { passive: false });
+
+    // Touch start
+    this.canvas.addEventListener('touchstart', (e) => {
+        const touch = e.changedTouches[0];
+        this.touchStartX = touch.clientX;
+        this.touchStartY = touch.clientY;
+        
+        // Handle double tap
+        const currentTime = new Date().getTime();
+        if (currentTime - this.lastTapTime < this.doubleTapDelay) {
+            this.player.flap();
+            this.player.flap(); // Double flap for double tap
+        }
+        this.lastTapTime = currentTime;
     });
-    this.canvas.addEventListener("touchmove", (e) => {
-      e.preventDefault();
+
+    // Touch end
+    this.canvas.addEventListener('touchend', (e) => {
+        const touch = e.changedTouches[0];
+        const deltaX = touch.clientX - this.touchStartX;
+        const deltaY = touch.clientY - this.touchStartY;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        // If it's a tap (small movement)
+        if (distance < this.tapThreshold) {
+            this.player.flap();
+        }
+        // If it's a swipe up
+        else if (deltaY < -this.swipeThreshold && Math.abs(deltaX) < this.swipeThreshold) {
+            this.player.flap();
+        }
+        // If it's a swipe down
+        else if (deltaY > this.swipeThreshold && Math.abs(deltaX) < this.swipeThreshold) {
+            this.player.dive(); // Add dive method to Player class if needed
+        }
     });
-    this.canvas.addEventListener("toucend", (e) => {
-      if (e.changedTouches[0].pageX - this.touchStartX > this.swipeDistance) {
-        this.player.startCharge();
-      }
-    });
+}
   }
   resize(width, height) {
     this.canvas.width = width;
