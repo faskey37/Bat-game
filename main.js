@@ -56,44 +56,19 @@ class Game {
     this.canvas.addEventListener("keyup", (e) => {
       this.player.wingsUp;
     });
-   class Game {
-  constructor(canvas) {
-    // ... existing code ...
-    
-    // Touch button setup
-    this.flapButton = document.getElementById('flapButton');
-    this.setupTouchButton();
-    
-    // Detect touch devices
-    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints;
-    if (this.isTouchDevice) {
-      this.canvas.style.touchAction = 'none';
-    }
-  }
-
-  setupTouchButton() {
-    // Regular click/tap
-    this.flapButton.addEventListener('click', () => {
+    //touch controls
+    this.canvas.addEventListener("touchstart", (e) => {
       this.player.flap();
+      this.touchStartX = e.changedTouches[0].pageX;
     });
-
-    // Touch events for better mobile response
-    this.flapButton.addEventListener('touchstart', (e) => {
+    this.canvas.addEventListener("touchmove", (e) => {
       e.preventDefault();
-      this.player.flap();
-      this.flapButton.style.transform = 'scale(0.95)';
-      this.flapButton.style.background = 'rgba(0, 200, 0, 0.7)';
     });
-
-    this.flapButton.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      this.flapButton.style.transform = 'scale(1)';
-      this.flapButton.style.background = 'rgba(0, 255, 0, 0.5)';
+    this.canvas.addEventListener("toucend", (e) => {
+      if (e.changedTouches[0].pageX - this.touchStartX > this.swipeDistance) {
+        this.player.startCharge();
+      }
     });
-  }
-  
-  // ... rest of your Game class ...
-}
   }
   resize(width, height) {
     this.canvas.width = width;
