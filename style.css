@@ -17,3 +17,30 @@
       display: none ;
 }
 
+#touchControls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 20;
+  display: none; /* Hidden by default, shown for touch devices */
+}
+
+#flapButton {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(0, 255, 0, 0.5);
+  border: 3px solid white;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Show controls only on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  #touchControls {
+    display: block;
+  }
+}
