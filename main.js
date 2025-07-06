@@ -10,7 +10,7 @@ class Game {
     this.player = new Player(this);
     this.sound = new AudioControl();
     this.obstacle = [];
-    this.numberOfObstacles = 20;
+    this.numberOfObstacles = 20000;
     this.gravity;
     this.speed;
     this.minSpeed;
