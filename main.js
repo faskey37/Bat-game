@@ -247,4 +247,29 @@ document.addEventListener('soundToggle', (e) => {
     } else {
         // Mute sounds
     }
+});// Game reset handler
+document.addEventListener('gameReset', () => {
+    // Reset all your game variables here
+    score = 0;
+    player.x = 100;
+    player.y = canvas.height / 2;
+    obstacles = [];
+    
+    // Redraw the initial game state
+    drawGameFrame();
 });
+
+// Example draw function (you should already have something similar)
+function drawGameFrame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw background
+    // Draw player
+    // Draw obstacles
+    // Draw score
+    
+    // Only request new frame if game is active
+    if (gameActive) {
+        requestAnimationFrame(drawGameFrame);
+    }
+}

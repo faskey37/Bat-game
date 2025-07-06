@@ -1,46 +1,57 @@
-// menu.js - Standalone Menu System
+// menu.js - Standalone Menu System with Reset
 document.addEventListener('DOMContentLoaded', () => {
-    // Get menu elements
+    // Get elements
     const mainMenu = document.getElementById('mainMenu');
     const startButton = document.getElementById('startButton');
     const soundToggle = document.getElementById('soundToggle');
+    const resetButton = document.getElementById('resetButton');
     const gameUI = document.getElementById('gameUI');
     
-    // Menu state
+    // State
     let soundOn = true;
-    
+    let gameActive = false;
+
     // Initialize menu
     function initMenu() {
-        // Show main menu, hide game UI
-        mainMenu.classList.remove('hidden');
-        gameUI.classList.add('hidden');
-        
         // Set up event listeners
         startButton.addEventListener('click', startGame);
         soundToggle.addEventListener('click', toggleSound);
+        resetButton.addEventListener('click', resetGame);
+        
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'r' && gameActive) {
+                resetGame();
+            }
+        });
     }
-    
-    // Start game function
+
     function startGame() {
-        // Hide menu, show game UI
         mainMenu.classList.add('hidden');
         gameUI.classList.remove('hidden');
+        resetButton.classList.remove('hidden');
+        gameActive = true;
         
-        // Dispatch custom event to notify game to start
-        const gameStartEvent = new CustomEvent('gameStart');
-        document.dispatchEvent(gameStartEvent);
+        // Dispatch event to start game
+        document.dispatchEvent(new CustomEvent('gameStart'));
     }
-    
-    // Sound toggle function
+
+    function resetGame() {
+        if (!gameActive) return;
+        
+        // Dispatch event to reset game
+        document.dispatchEvent(new CustomEvent('gameReset'));
+        
+        // Visual feedback
+        resetButton.classList.add('pulse');
+        setTimeout(() => resetButton.classList.remove('pulse'), 300);
+    }
+
     function toggleSound() {
         soundOn = !soundOn;
         soundToggle.textContent = `SOUND: ${soundOn ? 'ON' : 'OFF'}`;
-        
-        // Dispatch custom event for sound change
-        const soundEvent = new CustomEvent('soundToggle', { detail: soundOn });
-        document.dispatchEvent(soundEvent);
+        document.dispatchEvent(new CustomEvent('soundToggle', { detail: soundOn }));
     }
-    
-    // Initialize the menu
+
     initMenu();
 });
