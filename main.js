@@ -231,3 +231,20 @@ window.addEventListener("load", function () {
   }
   requestAnimationFrame(animate);
 });
+
+// Listen for game start event
+document.addEventListener('gameStart', () => {
+    // Put your game initialization code here
+    startGame(); // Your existing game start function
+});
+
+// Listen for sound toggle event
+document.addEventListener('soundToggle', (e) => {
+    const soundOn = e.detail;
+    // Toggle your game sounds here
+    if (soundOn) {
+        // Unmute sounds
+    } else {
+        // Mute sounds
+    }
+});
