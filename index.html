@@ -9,43 +9,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <canvas id="canvas1"></canvas>
-<!-- Add this to your HTML file -->
-<div id="gameMenu" class="menu-container">
-    <div class="menu-overlay">
-        <div class="menu-content">
-            <h1 class="game-title">Aqua Flier</h1>
-            
-            <div id="mainMenu" class="menu-section">
-                <button id="startButton" class="menu-button">START GAME</button>
-                <button id="soundToggle" class="menu-button">SOUND: ON</button>
-                <button id="fullscreenButton" class="menu-button">FULLSCREEN</button>
-                <div class="controls-info">
-                    <p>CONTROLS:</p>
-                    <p>SPACE/CLICK - Flap Wings</p>
-                    <p>SHIFT/C - Charge Boost</p>
-                    <p>R - Restart Game</p>
-                </div>
-            </div>
-            
-            <div id="pauseMenu" class="menu-section hidden">
-                <h2>GAME PAUSED</h2>
-                <button id="resumeButton" class="menu-button">RESUME</button>
-                <button id="restartButton" class="menu-button">RESTART</button>
-                <button id="menuButton" class="menu-button">MAIN MENU</button>
-            </div>
-            
-            <div id="gameOverMenu" class="menu-section hidden">
-                <h2>GAME OVER</h2>
-                <p id="finalScoreText">Score: 0</p>
-                <p id="finalTimeText">Time: 0.0s</p>
-                <button id="restartButton" class="menu-button">TRY AGAIN</button>
-                <button id="menuButton" class="menu-button">MAIN MENU</button>
-            </div>
-        </div>
+
+
+<div id="gameUI" class="hidden">
+    <!-- Your game UI elements (score, etc) -->
 </div>
     <div class="assets">
         <img id="background" src="background_single.png">
