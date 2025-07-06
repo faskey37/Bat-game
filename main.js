@@ -232,44 +232,50 @@ window.addEventListener("load", function () {
   requestAnimationFrame(animate);
 });
 
-// Listen for game start event
-document.addEventListener('gameStart', () => {
-    // Put your game initialization code here
-    startGame(); // Your existing game start function
-});
-
-// Listen for sound toggle event
-document.addEventListener('soundToggle', (e) => {
-    const soundOn = e.detail;
-    // Toggle your game sounds here
-    if (soundOn) {
-        // Unmute sounds
-    } else {
-        // Mute sounds
+window.addEventListener("load", function() {
+    const canvas = document.getElementById("canvas1");
+    const ctx = canvas.getContext("2d");
+    canvas.width = 720;
+    canvas.height = 720;
+    const game = new Game(canvas, ctx);
+    
+    // Initialize energy bar
+    game.initEnergyBar();
+    
+    // Listen for menu events
+    document.addEventListener('gameStart', () => {
+        game.resize(window.innerWidth, window.innerHeight);
+        game.gameOver = false;
+    });
+    
+    document.addEventListener('gameReset', () => {
+        game.resize(window.innerWidth, window.innerHeight);
+    });
+    
+    document.addEventListener('soundToggle', (e) => {
+        // Implement sound on/off functionality
+    });
+    
+    // Modify your triggerGameOver to use the menu system
+    triggerGameOver() {
+        if (!this.gameOver) {
+            this.gameOver = true;
+            window.menuSystem.showGameOver(this.score, this.formatTimer());
+        }
     }
-});// Game reset handler
-document.addEventListener('gameReset', () => {
-    // Reset all your game variables here
-    score = 0;
-    player.x = 100;
-    player.y = canvas.height / 2;
-    obstacles = [];
     
-    // Redraw the initial game state
-    drawGameFrame();
-});
-
-// Example draw function (you should already have something similar)
-function drawGameFrame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw background
-    // Draw player
-    // Draw obstacles
-    // Draw score
-    
-    // Only request new frame if game is active
-    if (gameActive) {
-        requestAnimationFrame(drawGameFrame);
+    let lastTime = 0;
+    function animate(timeStamp) {
+        const deltaTime = timeStamp - lastTime;
+        lastTime = timeStamp;
+        
+        if (!game.gameOver && !gamePaused) {
+            game.render(deltaTime);
+            game.updateEnergyBar();
+        }
+        
+        requestAnimationFrame(animate);
     }
-}
+    
+    requestAnimationFrame(animate);
+});
