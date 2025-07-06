@@ -187,7 +187,7 @@ class Game {
         this.width
       );
       this.ctx.fillText(
-        "Press 'R' to try again!",
+        "Press 'ctrl + R' to try again!",
         this.width * 0.5,
         this.height * 0.5,
         this.width
