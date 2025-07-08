@@ -31,6 +31,7 @@ class Game {
     this.debug = false;
     this.restartButton = document.getElementById("restartButton");
     this.fullScreenButton = document.getElementById("fullScreenButton");
+    this.drawEnergyBar;
 
     this.resize(window.innerWidth, window.innerHeight);
 
