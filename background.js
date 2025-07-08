@@ -2,7 +2,7 @@ class Background {
     constructor(game){
         this.game = game;
         this.image = document.getElementById('background')
-        this.width = 2400;
+        this.width = 1536;
         this.height = this.game.baseHeight;
         this.scaledWidth;
         this.scaledHeight;
